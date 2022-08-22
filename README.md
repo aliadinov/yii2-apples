@@ -5,6 +5,7 @@
 3. php init --env=Development
 4. Создать БД apples и прописать ее в common/config/main-local.php
 5. php yii migrate
+6. Страница будет достуна по урлу http://{{your_backend_url}}/apples/index
 ```
 
 ### Комментарии по коду:
