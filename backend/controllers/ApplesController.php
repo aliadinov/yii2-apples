@@ -8,10 +8,36 @@ use backend\models\forms\RemoveAppleForm;
 use common\helpers\ApplesProvider;
 use common\models\Apple;
 use yii\base\Exception;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
 
 class ApplesController extends Controller {
+    public function behaviors(): array {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'regenerate-random-apples', 'fall-to-ground', 'eat-apple', 'remove-apple'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'regenerate-random-apples' => ['post'],
+                    'fall-to-ground' => ['post'],
+                    'eat-apple' => ['post'],
+                    'remove-Apple' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex(): string {
         return $this->render('index', [
             'apples'          => Apple::find()->all(),
